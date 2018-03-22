@@ -4,11 +4,7 @@ import QtQuick.Layouts 1.0
 
 Item {
     id: root
-    property alias button1: button1
-    property alias button2: button2
-    property alias button3: button3
-    property alias button4: button4
-
+    property var answers: ["answer1", "answer2", "answer3", "answer4"];
     property string questToText: ""
     property string questText: ""
 
@@ -36,17 +32,15 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Button {
-                id: button1
                 Layout.preferredWidth: 200
-                text: qsTr("Press Me 1")
-                onClicked: butClicked(1);
+                text: answers[0];
+                onClicked: butClicked(0);
             }
 
             Button {
-                id: button2
                 Layout.preferredWidth: 200
-                text: qsTr("Press Me 2")
-                onClicked: butClicked(2);
+                text: answers[1];
+                onClicked: butClicked(1);
             }
         }
         RowLayout {
@@ -54,17 +48,15 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Button {
-                id: button3
                 Layout.preferredWidth: 200
-                text: qsTr("Press Me 1")
-                onClicked: butClicked(3);
+                text: answers[2];
+                onClicked: butClicked(2);
             }
 
             Button {
-                id: button4
                 Layout.preferredWidth: 200
-                text: qsTr("Press Me 2")
-                onClicked: butClicked(4);
+                text: answers[3];
+                onClicked: butClicked(3);
             }
         }
     }

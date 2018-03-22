@@ -2,5 +2,15 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Question4Answers.qml</file>
+        <file>SubResult.qml</file>
+        <file>deployment.pri</file>
+        <file>HansTDC.pro</file>
+        <file>main.cpp</file>
+        <file>qml.qrc</file>
+        <file>pics/Andreas.png</file>
+        <file>pics/Hans.png</file>
+        <file>pics/Jonas.png</file>
+        <file>pics/Laust.png</file>
+        <file>pics/Sune.png</file>
     </qresource>
 </RCC>
