@@ -12,5 +12,6 @@
         <file>pics/Jonas.png</file>
         <file>pics/Laust.png</file>
         <file>pics/Sune.png</file>
+        <file>QuestionDrinkBeer.qml</file>
     </qresource>
 </RCC>

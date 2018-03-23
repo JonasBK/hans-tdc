@@ -9,26 +9,28 @@ Item {
     property string questText: ""
 
     signal butClicked(int nr);
+    signal back();
 
     ColumnLayout {
         anchors.centerIn: parent
-        spacing: 10
+        spacing: 30
 
-        Label {
+        Text {
             id: questTo
             text: "Spørgsmål til " + questToText;
+            font.pointSize: 16
             anchors.horizontalCenter: parent.horizontalCenter
-
         }
 
         Label {
             id: questLabel
             text: questToText !== "Hans" ? "Hans er blevet spurgt: \"" + questText + "\"" : questText;
+            font.pointSize: 12
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
         RowLayout {
-            spacing: 10
+            spacing: 30
             anchors.horizontalCenter: parent.horizontalCenter
 
             Button {
@@ -43,8 +45,9 @@ Item {
                 onClicked: butClicked(1);
             }
         }
+
         RowLayout {
-            spacing: 10
+            spacing: 30
             anchors.horizontalCenter: parent.horizontalCenter
 
             Button {
@@ -58,6 +61,12 @@ Item {
                 text: answers[3];
                 onClicked: butClicked(3);
             }
+        }
+
+        Button {
+            Layout.preferredWidth: 100
+            text: "Tilbage"
+            onClicked: root.back();
         }
     }
 }

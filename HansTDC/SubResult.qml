@@ -7,6 +7,7 @@ Item {
     property string question: ""
     property var names: ["name1", "name2", "name3", "name4", "name5"];
     property var answers: ["answer1", "answer2", "answer3", "answer4"];
+    property var subRoundWinners: [false, false, false, false, false];
     property var selected: [0, 0, 0, 0, 0];
     property var score: [0, 0, 0, 0, 0];
 
@@ -37,7 +38,7 @@ Item {
                 text: "Score:"
             }
             Text {
-                text: "Dom:"
+                text: "Resultat:"
             }
         }
 
@@ -65,11 +66,11 @@ Item {
 
                 Text {
                     Layout.preferredWidth: 100
-                    text: root.score[index];
+                    text: index == 0 ? "" : root.score[index];
                 }
 
                 Text {
-                    text: ""//Add dom
+                    text: index == 0 ? "" : root.subRoundWinners[index] ? "+1 point" : "Drik 3 tåre"
                 }
             }
         }

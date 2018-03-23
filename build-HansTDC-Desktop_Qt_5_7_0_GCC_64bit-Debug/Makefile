@@ -572,6 +572,7 @@ qrc_qml.cpp: ../HansTDC/qml.qrc \
 		../HansTDC/HansTDC.pro \
 		../HansTDC/main.cpp \
 		../HansTDC/qml.qrc \
+		../HansTDC/QuestionDrinkBeer.qml \
 		../HansTDC/SubResult.qml \
 		../HansTDC/Question4Answers.qml \
 		../HansTDC/main.qml \
