@@ -13,5 +13,7 @@
         <file>pics/Laust.png</file>
         <file>pics/Sune.png</file>
         <file>QuestionDrinkBeer.qml</file>
+        <file>DrinkBeer.qml</file>
+        <file>DrinkResult.qml</file>
     </qresource>
 </RCC>

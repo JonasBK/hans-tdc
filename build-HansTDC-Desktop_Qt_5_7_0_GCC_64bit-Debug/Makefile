@@ -574,9 +574,11 @@ qrc_qml.cpp: ../HansTDC/qml.qrc \
 		../HansTDC/qml.qrc \
 		../HansTDC/QuestionDrinkBeer.qml \
 		../HansTDC/SubResult.qml \
+		../HansTDC/DrinkResult.qml \
 		../HansTDC/Question4Answers.qml \
 		../HansTDC/main.qml \
 		../HansTDC/deployment.pri \
+		../HansTDC/DrinkBeer.qml \
 		../HansTDC/pics/Laust.png \
 		../HansTDC/pics/Hans.png \
 		../HansTDC/pics/Andreas.png \

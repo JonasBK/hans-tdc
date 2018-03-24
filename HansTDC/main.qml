@@ -10,13 +10,17 @@ ApplicationWindow {
     height: 880
     title: qsTr("Gæt hvad Kaptajn Biceps tænker!")
 
-    property var selected: [0, 0, 0, 0, 0];
-    property var score: [0, 0, 0, 0, 0];
-    property var subRoundWinners: [false, false, false, false, false];
     property int underState: 0
     property var names: ["Hans", "Sune", "Jonas", "Laust", "Andreas"];
+    property var score: [0, 0, 0, 0, 0];
 
-    property var timeGuess: [0, 0, 0, 0];
+    property var selected: [0, 0, 0, 0, 0];
+    property var subRoundWinners: [false, false, false, false, false];
+
+    property var times: [0, 0, 0, 0, 0];
+    property var timeDiffs: [0, 0, 0, 0, 0];
+
+    property string winner: ""
 
     function handleButClick(next, butNr) {
         selected[underState] = butNr;
@@ -41,6 +45,9 @@ ApplicationWindow {
             subRes4.selected = root.selected;
             subRes4.score = root.score;
             subRes4.subRoundWinners = root.subRoundWinners;
+            subRes5.selected = root.selected;
+            subRes5.score = root.score;
+            subRes5.subRoundWinners = root.subRoundWinners;
 
             underState = 0;
             subRoundWinners = [false, false, false, false];
@@ -48,10 +55,28 @@ ApplicationWindow {
         }
     }
 
+    function indexOfMax(arr) {
+        if (arr.length === 0) {
+            return -1;
+        }
+
+        var max = arr[0];
+        var maxIndex = 0;
+
+        for (var i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                maxIndex = i;
+                max = arr[i];
+            }
+        }
+
+        return maxIndex;
+    }
+
     SwipeView {
         id: view
         anchors.fill: parent
-        currentIndex: 0
+        currentIndex: 10
 //        interactive: false
 
         Question4Answers {
@@ -122,17 +147,111 @@ ApplicationWindow {
             onNext: view.setCurrentIndex(8);
         }
 
-        QuestionDrinkBeer {
-            questToText: underState > 4 ? "" : names[underState + 1];
+        Question4Answers {
+            id: quest5
+            questToText: names[underState];
+            questText: "Hvem fra HTX er mest attraktiv?"
+            answers: ["Malene fra B-klassen", "Astrid fra vores klasse", "Søren fra vores klasse", "Pernille fra B-klassen"];
+            onButClicked: handleButClick(9, nr);
             onBack: underState === 0 ? view.setCurrentIndex(7) : underState--;
+        }
+
+        SubResult {
+            id: subRes5
+            names: root.names;
+            question: quest5.questText
+            answers: quest5.answers;
+            onNext: view.setCurrentIndex(10);
+        }
+
+        QuestionDrinkBeer {
+            questToText: underState > 3 ? "" : names[underState + 1];
+            onBack: underState === 0 ? view.setCurrentIndex(9) : underState--;
             onButClicked: {
-                timeGuess[underState + 1] = time;
-                if (underState < 4) {
+                root.times[underState + 1] = time;
+                if (underState < 3) {
                     underState++;
                 } else {
-                    view.setCurrentIndex(9);
+                    view.setCurrentIndex(11);
                 }
             }
+        }
+
+        DrinkBeer {
+            onResult: {
+                root.times[0] = res;
+
+                var minDiff = 100000;
+                for (var i = 1; i < 5; i++) {
+                    root.timeDiffs[i] = Math.abs(root.times[i] - root.times[0]);
+                    minDiff = Math.min(minDiff, root.timeDiffs[i]);
+                }
+
+                for (i = 1; i < 5; i++) {
+                    if (root.timeDiffs[i] === minDiff) {
+                        root.score[i]++;
+                        root.subRoundWinners[i] = true;
+                    }
+                }
+                drinkRes.subRoundWinners = root.subRoundWinners;
+                drinkRes.diffs = root.timeDiffs;
+                drinkRes.times = root.times;
+                drinkRes.score = root.score;
+
+                view.setCurrentIndex(12);
+            }
+        }
+
+        DrinkResult {
+            id: drinkRes
+            names: root.names;
+            onNext: {
+                root.winner = names[indexOfMax(score)];
+                winnerText.text = root.winner + " har vundet!"
+                winnerPic.source = "pics/" + root.winner + ".png"
+                view.setCurrentIndex(13);
+            }
+        }
+
+        Rectangle {
+            ColumnLayout {
+                spacing: 15
+                anchors.centerIn: parent
+
+                Text {
+                    id: winnerText
+                    font.pointSize: 14
+                }
+                Image {
+                    id: winnerPic
+                    Layout.preferredHeight: 500
+                    Layout.preferredWidth: 500
+                }
+            }
+        }
+    }
+
+    Rectangle {
+        id: welcome
+        anchors.fill: parent
+
+        ColumnLayout {
+            spacing: 15
+            anchors.centerIn: parent
+
+            Text {
+                text: "Velkommen til"
+                font.pointSize: 14
+            }
+            Text {
+                text: "Gæt hvad Kaptajn Biceps tænker!"
+                font.pointSize: 20
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: welcome.visible = false;
         }
     }
 }
